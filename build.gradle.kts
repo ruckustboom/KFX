@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version "1.4.0"
     id("org.openjfx.javafxplugin") version "0.0.9"
@@ -26,17 +28,12 @@ javafx {
     modules("javafx.controls", "javafx.fxml")
 }
 
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.useIR = true
+}
+
 tasks {
-    compileKotlin {
-        kotlinOptions {
-            useIR = true
-        }
-    }
-    compileTestKotlin {
-        kotlinOptions {
-            useIR = true
-        }
-    }
     test {
         useJUnitPlatform()
     }
