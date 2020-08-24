@@ -1,0 +1,23 @@
+.root {
+    -fx-font-weight: bold;
+    -nuke-red: #990033;
+    -nuke-blue: #003399;
+}
+
+.placeholder {
+    -fx-padding: 8px;
+    -fx-background-color: -fx-base;
+}
+
+#center {
+    -fx-base: black;
+    -fx-font-size: 48px;
+}
+
+.red {
+    -fx-base: -nuke-red;
+}
+
+.blue {
+    -fx-base: -nuke-blue;
+}

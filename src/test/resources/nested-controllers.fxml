@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="kfx.apps.NestedControllers"
+            stylesheets="/nested-controllers.css"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <!--suppress JavaFxUnresolvedFxIdReference -->
+        <fx:include source="/placeholder.fxml" fx:id="center"/>
+    </center>
+    <top>
+        <fx:include source="/placeholder.fxml" styleClass="blue"/>
+    </top>
+    <bottom>
+        <fx:include source="/placeholder.fxml" styleClass="blue"/>
+    </bottom>
+    <left>
+        <fx:include source="/placeholder.fxml" styleClass="red"/>
+    </left>
+    <right>
+        <fx:include source="/placeholder.fxml" styleClass="red"/>
+    </right>
+</BorderPane>
