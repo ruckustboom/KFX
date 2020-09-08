@@ -1,2 +1,1 @@
-rootProject.name = "KFX"
-
+rootProject.name = "kfx"

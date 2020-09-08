@@ -25,6 +25,7 @@ kotlin {
 }
 
 javafx {
+    version = "15"
     modules("javafx.controls", "javafx.fxml")
 }
 
