@@ -29,12 +29,14 @@ javafx {
     modules("javafx.controls", "javafx.fxml")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
-    kotlinOptions.useIR = true
-}
-
 tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "11"
+            useIR = true
+            freeCompilerArgs += "-Xjvm-default=all"
+        }
+    }
     test {
         useJUnitPlatform()
     }
