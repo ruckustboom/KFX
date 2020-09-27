@@ -1,5 +1,7 @@
 package kfx
 
+import javafx.beans.InvalidationListener
+import javafx.beans.Observable
 import javafx.beans.property.IntegerProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.value.*
@@ -15,6 +17,11 @@ public typealias WritableObject<T> = WritableObjectValue<T>
 
 public typealias IntProperty = IntegerProperty
 public typealias SimpleIntProperty = SimpleIntegerProperty
+
+public fun Observable.addAndRunListener(listener: InvalidationListener) {
+    addListener(listener)
+    listener.invalidated(this)
+}
 
 // Delegation
 
