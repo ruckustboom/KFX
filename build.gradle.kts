@@ -31,7 +31,7 @@ javafx {
 tasks {
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = "15"
             useIR = true
             freeCompilerArgs += "-Xjvm-default=all"
         }
