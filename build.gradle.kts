@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.21"
-    id("org.openjfx.javafxplugin") version "0.0.9"
+    kotlin("jvm") version "1.5.0"
+    id("org.openjfx.javafxplugin") version "0.0.10"
     maven
 }
 
@@ -11,10 +11,10 @@ version = "0.1.0"
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
+    testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
 }
@@ -28,15 +28,11 @@ javafx {
     modules("javafx.controls", "javafx.fxml")
 }
 
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "15"
-            useIR = true
-            freeCompilerArgs += "-Xjvm-default=all"
-        }
-    }
-    test {
-        useJUnitPlatform()
-    }
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "15"
+    kotlinOptions.freeCompilerArgs += "-Xjvm-default=all"
 }
