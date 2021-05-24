@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.0"
+    kotlin("jvm") version "1.5.10"
     id("org.openjfx.javafxplugin") version "0.0.10"
-    maven
+    id("maven-publish")
 }
 
 group = "ruckustboom"
@@ -24,7 +24,7 @@ kotlin {
 }
 
 javafx {
-    version = "15"
+    version = "16"
     modules("javafx.controls", "javafx.fxml")
 }
 
@@ -33,6 +33,14 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "15"
+    kotlinOptions.jvmTarget = "16"
     kotlinOptions.freeCompilerArgs += "-Xjvm-default=all"
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
 }
