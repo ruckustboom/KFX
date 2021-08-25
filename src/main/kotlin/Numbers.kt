@@ -8,6 +8,7 @@ import com.sun.javafx.binding.IntegerConstant
 import com.sun.javafx.binding.LongConstant
 import javafx.beans.Observable
 import javafx.beans.binding.Bindings.*
+import javafx.beans.binding.LongBinding
 import javafx.beans.binding.NumberBinding
 import javafx.beans.value.ObservableNumberValue
 
@@ -75,6 +76,19 @@ public inline fun ObservableNumber.mod(value: Float): NumberBinding = modulus(th
 public inline fun ObservableNumber.mod(value: Double): NumberBinding = modulus(this, value)
 public inline fun ObservableNumber.mod(value: ObservableNumber): NumberBinding = modulus(this, value)
 
+public inline fun Int.floorDiv(value: ObservableInt): IntBinding = floorDivide(this, value)
+public inline fun Int.floorDiv(value: ObservableLong): LongBinding = floorDivide(this, value)
+public inline fun Long.floorDiv(value: ObservableInt): LongBinding = floorDivide(this, value)
+public inline fun Long.floorDiv(value: ObservableLong): LongBinding = floorDivide(this, value)
+public inline fun ObservableInt.floorDiv(value: Int): IntBinding = floorDivide(this, value)
+public inline fun ObservableInt.floorDiv(value: Long): LongBinding = floorDivide(this, value)
+public inline fun ObservableLong.floorDiv(value: Int): LongBinding = floorDivide(this, value)
+public inline fun ObservableLong.floorDiv(value: Long): LongBinding = floorDivide(this, value)
+public inline fun ObservableInt.floorDiv(value: ObservableInt): IntBinding = floorDivide(this, value)
+public inline fun ObservableInt.floorDiv(value: ObservableLong): LongBinding = floorDivide(this, value)
+public inline fun ObservableLong.floorDiv(value: ObservableInt): LongBinding = floorDivide(this, value)
+public inline fun ObservableLong.floorDiv(value: ObservableLong): LongBinding = floorDivide(this, value)
+
 // Implementation
 
 public inline fun remainder(a: Int, b: ObservableNumber): NumberBinding = remainder(IntegerConstant.valueOf(a), b, b)
@@ -109,3 +123,25 @@ public fun modulus(a: ObservableNumber, b: ObservableNumber, vararg dependencies
     a is ObservableLong || b is ObservableLong -> longBinding(*dependencies) { a.longValue().mod(b.longValue()) }
     else -> intBinding(*dependencies) { a.intValue().mod(b.intValue()) }
 }
+
+public inline fun floorDivide(a: Int, b: ObservableInt): IntBinding = floorDivide(IntegerConstant.valueOf(a), b, b)
+public inline fun floorDivide(a: Int, b: ObservableLong): LongBinding = floorDivide(IntegerConstant.valueOf(a), b, b)
+public inline fun floorDivide(a: Long, b: ObservableInt): LongBinding = floorDivide(LongConstant.valueOf(a), b, b)
+public inline fun floorDivide(a: Long, b: ObservableLong): LongBinding = floorDivide(LongConstant.valueOf(a), b, b)
+public inline fun floorDivide(a: ObservableInt, b: Int): IntBinding = floorDivide(a, IntegerConstant.valueOf(b), a)
+public inline fun floorDivide(a: ObservableInt, b: Long): LongBinding = floorDivide(a, LongConstant.valueOf(b), a)
+public inline fun floorDivide(a: ObservableLong, b: Int): LongBinding = floorDivide(a, IntegerConstant.valueOf(b), a)
+public inline fun floorDivide(a: ObservableLong, b: Long): LongBinding = floorDivide(a, LongConstant.valueOf(b), a)
+public inline fun floorDivide(a: ObservableInt, b: ObservableInt): IntBinding = floorDivide(a, b, a, b)
+public inline fun floorDivide(a: ObservableInt, b: ObservableLong): LongBinding = floorDivide(a, b, a, b)
+public inline fun floorDivide(a: ObservableLong, b: ObservableInt): LongBinding = floorDivide(a, b, a, b)
+public inline fun floorDivide(a: ObservableLong, b: ObservableLong): LongBinding = floorDivide(a, b, a, b)
+
+public inline fun floorDivide(a: ObservableInt, b: ObservableInt, vararg dependencies: Observable): IntBinding =
+    intBinding(*dependencies) { a.intValue().floorDiv(b.intValue()) }
+public inline fun floorDivide(a: ObservableInt, b: ObservableLong, vararg dependencies: Observable): LongBinding =
+    longBinding(*dependencies) { a.intValue().floorDiv(b.longValue()) }
+public inline fun floorDivide(a: ObservableLong, b: ObservableInt, vararg dependencies: Observable): LongBinding =
+    longBinding(*dependencies) { a.longValue().floorDiv(b.intValue()) }
+public inline fun floorDivide(a: ObservableLong, b: ObservableLong, vararg dependencies: Observable): LongBinding =
+    longBinding(*dependencies) { a.longValue().floorDiv(b.longValue()) }
