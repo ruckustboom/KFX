@@ -65,23 +65,47 @@ public inline operator fun ObservableNumber.rem(value: Float): NumberBinding = r
 public inline operator fun ObservableNumber.rem(value: Double): NumberBinding = remainder(this, value)
 public inline operator fun ObservableNumber.rem(value: ObservableNumber): NumberBinding = remainder(this, value)
 
+public inline fun Int.mod(value: ObservableNumber): NumberBinding = modulus(this, value)
+public inline fun Long.mod(value: ObservableNumber): NumberBinding = modulus(this, value)
+public inline fun Float.mod(value: ObservableNumber): NumberBinding = modulus(this, value)
+public inline fun Double.mod(value: ObservableNumber): NumberBinding = modulus(this, value)
+public inline fun ObservableNumber.mod(value: Int): NumberBinding = modulus(this, value)
+public inline fun ObservableNumber.mod(value: Long): NumberBinding = modulus(this, value)
+public inline fun ObservableNumber.mod(value: Float): NumberBinding = modulus(this, value)
+public inline fun ObservableNumber.mod(value: Double): NumberBinding = modulus(this, value)
+public inline fun ObservableNumber.mod(value: ObservableNumber): NumberBinding = modulus(this, value)
+
 // Implementation
-
-public inline fun remainder(a: ObservableNumber, b: ObservableNumber): NumberBinding = remainder(a, b, a, b)
-
-public inline fun remainder(a: ObservableNumber, b: Int): NumberBinding = remainder(a, IntegerConstant.valueOf(b), a)
-public inline fun remainder(a: ObservableNumber, b: Long): NumberBinding = remainder(a, LongConstant.valueOf(b), a)
-public inline fun remainder(a: ObservableNumber, b: Float): NumberBinding = remainder(a, FloatConstant.valueOf(b), a)
-public inline fun remainder(a: ObservableNumber, b: Double): NumberBinding = remainder(a, DoubleConstant.valueOf(b), a)
 
 public inline fun remainder(a: Int, b: ObservableNumber): NumberBinding = remainder(IntegerConstant.valueOf(a), b, b)
 public inline fun remainder(a: Long, b: ObservableNumber): NumberBinding = remainder(LongConstant.valueOf(a), b, b)
 public inline fun remainder(a: Float, b: ObservableNumber): NumberBinding = remainder(FloatConstant.valueOf(a), b, b)
 public inline fun remainder(a: Double, b: ObservableNumber): NumberBinding = remainder(DoubleConstant.valueOf(a), b, b)
-
+public inline fun remainder(a: ObservableNumber, b: Int): NumberBinding = remainder(a, IntegerConstant.valueOf(b), a)
+public inline fun remainder(a: ObservableNumber, b: Long): NumberBinding = remainder(a, LongConstant.valueOf(b), a)
+public inline fun remainder(a: ObservableNumber, b: Float): NumberBinding = remainder(a, FloatConstant.valueOf(b), a)
+public inline fun remainder(a: ObservableNumber, b: Double): NumberBinding = remainder(a, DoubleConstant.valueOf(b), a)
+public inline fun remainder(a: ObservableNumber, b: ObservableNumber): NumberBinding = remainder(a, b, a, b)
 public fun remainder(a: ObservableNumber, b: ObservableNumber, vararg dependencies: Observable): NumberBinding = when {
     a is ObservableDouble || b is ObservableDouble -> doubleBinding(*dependencies) { a.doubleValue() % b.doubleValue() }
     a is ObservableFloat || b is ObservableFloat -> floatBinding(*dependencies) { a.floatValue() % b.floatValue() }
     a is ObservableLong || b is ObservableLong -> longBinding(*dependencies) { a.longValue() % b.longValue() }
     else -> intBinding(*dependencies) { a.intValue() % b.intValue() }
+}
+
+public inline fun modulus(a: Int, b: ObservableNumber): NumberBinding = modulus(IntegerConstant.valueOf(a), b, b)
+public inline fun modulus(a: Long, b: ObservableNumber): NumberBinding = modulus(LongConstant.valueOf(a), b, b)
+public inline fun modulus(a: Float, b: ObservableNumber): NumberBinding = modulus(FloatConstant.valueOf(a), b, b)
+public inline fun modulus(a: Double, b: ObservableNumber): NumberBinding = modulus(DoubleConstant.valueOf(a), b, b)
+public inline fun modulus(a: ObservableNumber, b: Int): NumberBinding = modulus(a, IntegerConstant.valueOf(b), a)
+public inline fun modulus(a: ObservableNumber, b: Long): NumberBinding = modulus(a, LongConstant.valueOf(b), a)
+public inline fun modulus(a: ObservableNumber, b: Float): NumberBinding = modulus(a, FloatConstant.valueOf(b), a)
+public inline fun modulus(a: ObservableNumber, b: Double): NumberBinding = modulus(a, DoubleConstant.valueOf(b), a)
+public inline fun modulus(a: ObservableNumber, b: ObservableNumber): NumberBinding = modulus(a, b, a, b)
+public fun modulus(a: ObservableNumber, b: ObservableNumber, vararg dependencies: Observable): NumberBinding = when {
+    a is ObservableDouble || b is ObservableDouble ->
+        doubleBinding(*dependencies) { a.doubleValue().mod(b.doubleValue()) }
+    a is ObservableFloat || b is ObservableFloat -> floatBinding(*dependencies) { a.floatValue().mod(b.floatValue()) }
+    a is ObservableLong || b is ObservableLong -> longBinding(*dependencies) { a.longValue().mod(b.longValue()) }
+    else -> intBinding(*dependencies) { a.intValue().mod(b.intValue()) }
 }
