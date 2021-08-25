@@ -21,14 +21,7 @@ public inline fun Node.removeProperty(key: Any?): Any? = if (hasProperties()) pr
 /**
  * Returns the deepest node at ([sceneX], [sceneY]) that matches the conditions
  *
- * **[sceneX] and [sceneY] should be the root scene coordinates_**
- *
- * Conditions:
- * - [ignoreMouseTransparent]: Skip nodes that are transparent to the mouse
- * - [ignoreInvisible]: Skip nodes that are not visible
- * - [ignoreUnmanaged]: Skip nodes that are not managed
- * - [ignoreDisabled]: Skip nodes that are disabled
- * - [isValid]: Any additional validation
+ * **IMPORTANT:** [sceneX] and [sceneY] should be the **root** scene coordinates
  *
  * _Original code from [Jonathan Giles](http://fxexperience.com/2016/01/node-picking-in-javafx/)_
  */
