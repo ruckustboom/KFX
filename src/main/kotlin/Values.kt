@@ -40,7 +40,7 @@ public fun ObservableValue<*>.selectLong(vararg steps: String): LongBinding = se
 public fun ObservableValue<*>.selectFloat(vararg steps: String): FloatBinding = selectFloat(this, *steps)
 public fun ObservableValue<*>.selectDouble(vararg steps: String): DoubleBinding = selectDouble(this, *steps)
 public fun ObservableValue<*>.selectString(vararg steps: String): StringBinding = selectString(this, *steps)
-public fun <T> ObservableValue<*>.select(vararg steps: String): ObjectBinding<T> = select<T>(this, *steps)
+public fun <T> ObservableValue<*>.select(vararg steps: String): ObjectBinding<T> = select(this, *steps)
 
 public inline fun ObservableValue<*>.asString(): StringExpression = convert(this)
 
