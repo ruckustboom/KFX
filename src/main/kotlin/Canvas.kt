@@ -12,15 +12,13 @@ public inline fun Canvas.strokeFunction(
 ): Unit = graphicsContext2D.strokeFunction(x, y, w, h, f)
 
 public inline fun GraphicsContext.strokeFunction(x: Double, y: Double, w: Double, h: Double, f: (Double) -> Double) {
-    var lastX = Double.NaN
     var lastY = Double.NaN
-    repeat(w.toInt() + 1) { px ->
-        val dx = px / w
+    repeat(w.toInt() + 1) {
+        val dx = it / w
         val dy = f(dx)
         val nextX = dx * w + x - 0.5
         val nextY = (1.0 - dy) * h + y - 0.5
-        if (!lastX.isNaN() && !lastY.isNaN()) strokeLine(lastX, lastY, nextX, nextY)
-        lastX = nextX
+        if (!lastY.isNaN()) strokeLine(nextX - 1.0, lastY, nextX, nextY)
         lastY = nextY
     }
 }
