@@ -1,9 +1,6 @@
 package kfx
 
-import javafx.beans.property.ObjectProperty
-import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleStringProperty
-import javafx.beans.property.StringProperty
+import javafx.beans.property.*
 
 class TestWrapper<T>(value: T) {
     @get:JvmName("valueProperty")
@@ -17,6 +14,6 @@ class TestData(string: String, int: Int) {
     var string by stringProperty
 
     @get:JvmName("intProperty")
-    val intProperty: IntProperty = SimpleIntProperty(this, "int", int)
+    val intProperty: IntegerProperty = SimpleIntegerProperty(this, "int", int)
     var int by intProperty
 }
