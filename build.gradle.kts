@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm") version "1.6.10"
     id("org.openjfx.javafxplugin") version "0.0.10"
     id("maven-publish")
 }
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test-junit5"))
+    testImplementation(kotlin("test"))
 }
 
 kotlin {
@@ -32,7 +32,6 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "16"
-    kotlinOptions.freeCompilerArgs += "-Xjvm-default=all"
 }
 
 publishing {
