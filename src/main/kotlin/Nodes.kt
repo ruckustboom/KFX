@@ -4,6 +4,7 @@ package kfx
 
 import javafx.scene.Node
 import javafx.scene.Parent
+import javafx.scene.control.ToggleGroup
 import javafx.scene.layout.Region
 import javafx.scene.shape.Rectangle
 
@@ -38,7 +39,7 @@ public fun Node.pick(
         (isMouseTransparent && ignoreMouseTransparent) ||
         (!isManaged && ignoreUnmanaged) ||
         (isDisabled && ignoreDisabled) ||
-        sceneToLocal(sceneX, sceneY) !in this ||
+        sceneToLocal(sceneX, sceneY, true) !in this ||
         (isValid != null && !isValid())
     ) return null
     if (this is Parent) {
@@ -54,4 +55,8 @@ public fun Node.pick(
         }
     }
     return this
+}
+
+public fun ToggleGroup.requireSelection() {
+    selectedToggleProperty().addListener { _, old, new -> if (new == null) old.isSelected = true }
 }
