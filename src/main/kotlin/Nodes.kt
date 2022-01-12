@@ -32,15 +32,13 @@ public fun Node.pick(
     ignoreInvisible: Boolean = true,
     ignoreUnmanaged: Boolean = false,
     ignoreDisabled: Boolean = false,
-    isValid: (Node.() -> Boolean)? = null,
+    isValid: ((Node) -> Boolean)? = null,
 ): Node? {
     if (
         (!isVisible && ignoreInvisible) ||
         (isMouseTransparent && ignoreMouseTransparent) ||
         (!isManaged && ignoreUnmanaged) ||
-        (isDisabled && ignoreDisabled) ||
-        sceneToLocal(sceneX, sceneY, true) !in this ||
-        (isValid != null && !isValid())
+        (isDisabled && ignoreDisabled)
     ) return null
     if (this is Parent) {
         for (child in childrenUnmodifiable) {
@@ -54,7 +52,7 @@ public fun Node.pick(
             ) ?: continue
         }
     }
-    return this
+    return takeIf { sceneToLocal(sceneX, sceneY, true) in this && (isValid == null || isValid(this)) }
 }
 
 public fun ToggleGroup.requireSelection() {
