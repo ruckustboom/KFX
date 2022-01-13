@@ -17,8 +17,8 @@ public inline fun Region.clipToBounds() {
 
 public inline fun Node.hasProperty(key: Any?): Boolean = hasProperties() && key in properties
 public inline fun Node.getProperty(key: Any?): Any? = if (hasProperties()) properties[key] else null
-public inline fun Node.setProperty(key: Any?, value: Any?) {
-    if (value == null) removeProperty(key) else properties[key] = value
+public inline fun Node.setProperty(key: Any?, value: Any?, removeIfNull: Boolean = false) {
+    if (value == null && removeIfNull) removeProperty(key) else properties[key] = value
 }
 
 public inline fun Node.removeProperty(key: Any?): Any? {
