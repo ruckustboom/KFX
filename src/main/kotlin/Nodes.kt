@@ -47,10 +47,9 @@ public fun Node.pick(
         (isDisabled && ignoreDisabled)
     ) return null
     if (this is Parent) {
-        val sorted = childrenUnmodifiable.sortedBy { it?.viewOrder }
+        val sorted = childrenUnmodifiable.sortedByDescending { it?.viewOrder }
         for (i in sorted.lastIndex downTo 0) {
-            val child = sorted[i]
-            return child?.pick(
+            return sorted[i]?.pick(
                 sceneX, sceneY,
                 ignoreMouseTransparent,
                 ignoreInvisible,
