@@ -22,7 +22,7 @@ kotlin {
 }
 
 javafx {
-    version = "16"
+    version = "17"
     modules("javafx.controls", "javafx.fxml")
 }
 
@@ -31,7 +31,7 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "16"
+    kotlinOptions.jvmTarget = "17"
 }
 
 publishing {
