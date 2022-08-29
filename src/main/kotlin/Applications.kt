@@ -24,9 +24,9 @@ public open class SimpleFXMLApplication(
     }
 }
 
-public inline fun onEveryFrame(start: Boolean = true, crossinline handle: (now: Long) -> Unit): AnimationTimer {
+public inline fun onEveryFrame(start: Boolean = true, crossinline action: (now: Long) -> Unit): AnimationTimer {
     val timer = object : AnimationTimer() {
-        override fun handle(now: Long) = handle(now)
+        override fun handle(now: Long) = action(now)
     }
     if (start) timer.start()
     return timer
