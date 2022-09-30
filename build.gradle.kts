@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.7.20"
     id("org.openjfx.javafxplugin") version "0.0.12"
     id("maven-publish")
 }
@@ -22,7 +22,7 @@ kotlin {
 }
 
 javafx {
-    version = "18"
+    version = "19"
     modules("javafx.controls", "javafx.fxml")
 }
 
