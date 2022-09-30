@@ -1,9 +1,14 @@
 package kfx
 
+import javafx.animation.PauseTransition
+import javafx.beans.InvalidationListener
+import javafx.beans.Observable
 import javafx.beans.property.*
+import javafx.css.PseudoClass
 import javafx.scene.control.TextField
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
+import javafx.util.Duration
 import javafx.util.StringConverter
 
 public enum class BlurAction { COMMIT, RESET, NONE }
@@ -12,17 +17,22 @@ public fun <T> TextField.editorFor(
     property: Property<T>,
     converter: StringConverter<T>,
     onBlur: BlurAction = BlurAction.COMMIT,
+    invalidClass: PseudoClass? = null,
 ) {
     property.addAndRunListener { refresh(property, converter) }
+
     when (onBlur) {
         BlurAction.COMMIT -> focusedProperty().addListener { _, wasFocused, isFocused ->
             if (!isFocused && wasFocused) update(property, converter)
         }
+
         BlurAction.RESET -> focusedProperty().addListener { _, wasFocused, isFocused ->
             if (!isFocused && wasFocused) refresh(property, converter)
         }
+
         BlurAction.NONE -> Unit
     }
+
     addEventHandler(KeyEvent.KEY_PRESSED) {
         when (it?.code) {
             KeyCode.ENTER -> {
@@ -39,6 +49,10 @@ public fun <T> TextField.editorFor(
 
             else -> Unit
         }
+    }
+
+    if (invalidClass != null) {
+        textProperty().addListener(ValidationListener(this, converter, invalidClass))
     }
 }
 
@@ -112,4 +126,27 @@ private fun <T> TextField.update(property: Property<T>, converter: StringConvert
 
 private fun <T> TextField.refresh(property: Property<T>, converter: StringConverter<T>) {
     text = converter.toString(property.value)
+}
+
+private class ValidationListener(
+    val field: TextField,
+    val converter: StringConverter<*>,
+    val pseudoClass: PseudoClass,
+) : InvalidationListener {
+    private val debounce = PauseTransition(Duration.seconds(0.1)).apply {
+        setOnFinished { check() }
+    }
+
+    override fun invalidated(observable: Observable?) {
+        debounce.playFromStart()
+    }
+
+    private fun check() {
+        field[pseudoClass] = try {
+            converter.fromString(field.text)
+            false
+        } catch (e: Exception) {
+            true
+        }
+    }
 }
