@@ -67,8 +67,6 @@ public fun TextField.editorFor(property: DoubleProperty, converter: StringConver
 private fun <T> TextField.update(property: Property<T>, converter: StringConverter<T>) {
     try {
         property.value = converter.fromString(text)
-    } catch (e: Exception) {
-        e.printStackTrace()
     } finally {
         refresh(property, converter)
     }
