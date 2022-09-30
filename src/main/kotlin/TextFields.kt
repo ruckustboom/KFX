@@ -90,6 +90,16 @@ public object DoubleConverter : SimpleStringConverter<Double>() {
     override fun fromString(string: String): Double = string.toDouble()
 }
 
+// String
+
+public class RegexConverter(private val regex: Regex? = null) : StringConverter<String>() {
+    override fun toString(value: String): String = value
+    override fun fromString(string: String): String {
+        if (regex != null) require(regex matches string)
+        return string
+    }
+}
+
 // Impl
 
 private fun <T> TextField.update(property: Property<T>, converter: StringConverter<T>) {
