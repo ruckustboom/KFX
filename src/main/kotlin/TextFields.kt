@@ -6,10 +6,22 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.util.StringConverter
 
-public fun <T> TextField.editorFor(property: Property<T>, converter: StringConverter<T>) {
+public enum class BlurAction { COMMIT, RESET, NONE }
+
+public fun <T> TextField.editorFor(
+    property: Property<T>,
+    converter: StringConverter<T>,
+    onBlur: BlurAction = BlurAction.COMMIT,
+) {
     property.addAndRunListener { refresh(property, converter) }
-    focusedProperty().addListener { _, wasFocused, isFocused ->
-        if (!isFocused && wasFocused) update(property, converter)
+    when (onBlur) {
+        BlurAction.COMMIT -> focusedProperty().addListener { _, wasFocused, isFocused ->
+            if (!isFocused && wasFocused) update(property, converter)
+        }
+        BlurAction.RESET -> focusedProperty().addListener { _, wasFocused, isFocused ->
+            if (!isFocused && wasFocused) refresh(property, converter)
+        }
+        BlurAction.NONE -> Unit
     }
     addEventHandler(KeyEvent.KEY_PRESSED) {
         when (it?.code) {
@@ -49,6 +61,8 @@ public fun TextField.editorFor(property: FloatProperty, converter: StringConvert
 public fun TextField.editorFor(property: DoubleProperty, converter: StringConverter<Double>) {
     editorFor(property as Property<Double>, converter)
 }
+
+// Impl
 
 private fun <T> TextField.update(property: Property<T>, converter: StringConverter<T>) {
     try {
