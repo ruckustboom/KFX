@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.10"
+    kotlin("jvm") version "1.9.22"
     id("org.openjfx.javafxplugin") version "0.1.0"
     id("maven-publish")
 }
@@ -31,7 +31,7 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "20"
+    kotlinOptions.jvmTarget = "21"
 }
 
 publishing {
