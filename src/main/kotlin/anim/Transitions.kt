@@ -8,32 +8,6 @@ import javafx.scene.paint.Color
 import javafx.scene.shape.Shape
 import javafx.util.Duration
 
-// General
-
-public inline fun <A : Animation> A.prep(play: Boolean = true, setup: A.() -> Unit): A {
-    setup()
-    if (play) play()
-    return this
-}
-
-public inline fun pause(
-    duration: Duration,
-    play: Boolean = true,
-    setup: PauseTransition.() -> Unit = {},
-): PauseTransition = PauseTransition(duration).prep(play, setup)
-
-public inline fun sequential(
-    vararg animations: Animation,
-    play: Boolean = true,
-    setup: SequentialTransition.() -> Unit = {},
-): SequentialTransition = SequentialTransition(*animations).prep(play, setup)
-
-public inline fun parallel(
-    vararg animations: Animation,
-    play: Boolean = true,
-    setup: ParallelTransition.() -> Unit = {},
-): ParallelTransition = ParallelTransition(*animations).prep(play, setup)
-
 // Nodes
 
 public inline fun Node.fade(

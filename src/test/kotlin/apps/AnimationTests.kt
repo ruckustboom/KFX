@@ -65,10 +65,27 @@ class AnimationTests : Initializable {
             to = Color.RED,
             play = false,
         )
+        val timeline = timeline(
+            keyFrame(
+                Duration.ZERO,
+                shape.widthProperty() keyVal shape.width / 2.0,
+                shape.fillProperty() keyVal Color.BLACK,
+            ),
+            keyFrame(
+                Duration.seconds(0.5),
+                shape.widthProperty() keyVal shape.width,
+            ),
+            keyFrame(
+                Duration.seconds(1.0),
+                shape.fillProperty() keyVal shape.fill,
+            ),
+            play = false,
+        )
         animationSelector.items.addAll(
             Anim("Path", path),
             Anim("Sequence", sequential(fade, translate, rotate, scale, fill, stroke, play = false)),
             Anim("Parallel", parallel(fade, translate, rotate, scale, fill, stroke, play = false)),
+            Anim("Timeline", timeline)
         )
     }
 
