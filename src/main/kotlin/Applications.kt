@@ -1,6 +1,5 @@
 package kfx
 
-import javafx.animation.AnimationTimer
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
@@ -22,12 +21,4 @@ public open class SimpleFXMLApplication(
         primaryStage.scene = scene
         primaryStage.show()
     }
-}
-
-public inline fun onEveryFrame(start: Boolean = true, crossinline action: (now: Long) -> Unit): AnimationTimer {
-    val timer = object : AnimationTimer() {
-        override fun handle(now: Long) = action(now)
-    }
-    if (start) timer.start()
-    return timer
 }

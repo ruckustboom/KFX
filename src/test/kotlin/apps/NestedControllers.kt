@@ -4,6 +4,7 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.paint.Color
 import kfx.*
+import kfx.anim.onEveryFrame
 import java.net.URL
 import java.time.LocalTime
 import java.util.*
