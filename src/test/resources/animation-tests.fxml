@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Rectangle?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="kfx.apps.AnimationTests"
+            stylesheets="/nested-controllers.css"
+            prefHeight="400.0" prefWidth="600.0">
+    <top>
+        <ChoiceBox fx:id="animationSelector" onAction="#animate"/>
+    </top>
+    <center>
+        <Rectangle fx:id="shape" fill="blue" stroke="red" strokeWidth="10" width="100" height="50"/>
+    </center>
+</BorderPane>
