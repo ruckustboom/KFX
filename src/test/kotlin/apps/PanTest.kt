@@ -20,7 +20,7 @@ class PanTestApp : Application() {
     private val proceduralGrid = proceduralCanvasOf { gc ->
         clear(Color.DODGERBLUE)
 
-        val scale = 50.0 * panPane.zoom
+        val scale = GRID_SIZE * panPane.zoom
         var d = panPane.panX.mod(scale)
         repeat(ceil(width / scale).toInt()) {
             gc.stroke = Color.LIME
@@ -42,11 +42,11 @@ class PanTestApp : Application() {
 
         repeat(10) { x ->
             repeat(10) { y ->
-                panPane.content.children += Circle(x * 50.0, y * 50.0, 2.0)
+                panPane.content.children += Circle(x * GRID_SIZE, y * GRID_SIZE, 2.0)
                 panPane.content.children += Label("$x, $y").apply {
                     font = Font(18.0)
-                    translateX = x * 50.0
-                    translateY = y * 50.0
+                    translateX = x * GRID_SIZE
+                    translateY = y * GRID_SIZE
                 }
             }
         }
@@ -67,5 +67,9 @@ class PanTestApp : Application() {
         primaryStage.show()
 
         panPane.setupSimpleMouseControls()
+    }
+
+    companion object {
+        private const val GRID_SIZE = 50.0
     }
 }
