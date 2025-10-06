@@ -16,7 +16,7 @@ public class ResizableCanvas(
 
     override fun resize(width: Double, height: Double) {
         super.resize(width, height)
-        this.width = width
-        this.height = height
+        if (!widthProperty().isBound) this.width = width
+        if (!heightProperty().isBound) this.height = height
     }
 }
