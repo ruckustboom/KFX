@@ -32,7 +32,7 @@ public class PanPane : Pane() {
     private val zoomScale = Scale()
 
     init {
-        isManaged = false
+        content.isManaged = false
         content.layoutXProperty().bind(panXProperty)
         content.layoutYProperty().bind(panYProperty)
         zoomScale.xProperty().bind(zoomProperty)

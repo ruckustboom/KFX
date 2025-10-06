@@ -11,6 +11,7 @@ import javafx.scene.shape.Line
 import javafx.scene.shape.StrokeLineCap
 import javafx.scene.text.Font
 import javafx.stage.Stage
+import kfx.controls.MaxPane
 import kfx.controls.PanPane
 import kfx.controls.setupSimpleMouseControls
 import kfx.launch
@@ -45,7 +46,7 @@ class PanTestApp : Application() {
         }
 
         primaryStage.title = "Pan Test"
-        primaryStage.scene = Scene(panPane, 960.0, 540.0)
+        primaryStage.scene = Scene(MaxPane(panPane), 960.0, 540.0)
         primaryStage.show()
 
         panPane.setupSimpleMouseControls()
