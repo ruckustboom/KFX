@@ -3,25 +3,42 @@ package kfx.apps
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.control.Label
-import javafx.scene.layout.Background
-import javafx.scene.layout.BackgroundFill
 import javafx.scene.paint.Color
 import javafx.scene.shape.Circle
 import javafx.scene.shape.Line
 import javafx.scene.shape.StrokeLineCap
 import javafx.scene.text.Font
 import javafx.stage.Stage
-import kfx.controls.MaxPane
-import kfx.controls.PanPane
-import kfx.controls.setupSimpleMouseControls
+import kfx.clear
+import kfx.controls.*
 import kfx.launch
+import kotlin.math.ceil
 
 fun main() = launch<PanTestApp>()
 class PanTestApp : Application() {
     private val panPane = PanPane()
+    private val proceduralGrid = proceduralCanvasOf { gc ->
+        clear(Color.DODGERBLUE)
+
+        val scale = 50.0 * panPane.zoom
+        var d = panPane.panX.mod(scale)
+        repeat(ceil(width / scale).toInt()) {
+            gc.stroke = Color.LIME
+            gc.strokeLine(d, 0.0, d, height)
+            d += scale
+        }
+        d = panPane.panY.mod(scale)
+        repeat(ceil(height / scale).toInt()) {
+            gc.stroke = Color.LIME
+            gc.strokeLine(0.0, d, width, d)
+            d += scale
+        }
+    }
 
     override fun start(primaryStage: Stage) {
-        panPane.background = Background(BackgroundFill(Color.DODGERBLUE, null, null))
+        panPane.panXProperty.addListener { proceduralGrid.draw() }
+        panPane.panYProperty.addListener { proceduralGrid.draw() }
+        panPane.zoomProperty.addListener { proceduralGrid.draw() }
 
         repeat(10) { x ->
             repeat(10) { y ->
@@ -46,7 +63,7 @@ class PanTestApp : Application() {
         }
 
         primaryStage.title = "Pan Test"
-        primaryStage.scene = Scene(MaxPane(panPane), 960.0, 540.0)
+        primaryStage.scene = Scene(MaxPane(proceduralGrid, panPane), 960.0, 540.0)
         primaryStage.show()
 
         panPane.setupSimpleMouseControls()
